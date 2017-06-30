@@ -17,7 +17,7 @@ module.exports = {
     const method = req.method
     if (log) {
       log(`request ${method} ${url}`, body)
-      log(`response 200, entity: `, entity)
+      log(`response 200, entity:`, entity)
     }
     res.status(200).send(entity)
   }),
@@ -37,43 +37,47 @@ module.exports = {
     const body = req.body
     const url = req.url
     const method = req.method
+    const error = err || { error: 'bad request' }
     if (log) {
       log(`request ${method} ${url}`, body)
-      log(`response 400`)
+      log(`response 400, error:`, error)
     }
-    res.status(400).send(err || { error: 'bad request' })
+    res.status(400).send(error)
   }),
 
   f403: (req, res, log) => (err => {
     const body = req.body
     const url = req.url
     const method = req.method
+    const error = err || { error: 'forbidden' }
     if (log) {
       log(`request ${method} ${url}`, body)
-      log(`response 403`)
+      log(`response 403, error:`, error)
     }
-    res.status(403).send(err || { error: 'forbidden' })
+    res.status(403).send(error)
   }),
 
   f404: (req, res, log) => (err => {
     const body = req.body
     const url = req.url
     const method = req.method
+    const error = err || { error: 'not found' }
     if (log) {
       log(`request ${method} ${url}`, body)
-      log(`response 404`)
+      log(`response 404, error:`, error)
     }
-    res.status(404).send(err || { error: 'not found' })
+    res.status(404).send(error)
   }),
 
   f500: (req, res, log) => (err => {
     const body = req.body
     const url = req.url
     const method = req.method
+    const error = err || { error: 'internal server error' }
     if (log) {
       log(`request ${method} ${url}`, body)
-      log(`response 500`)
+      log(`response 500, error:`, error)
     }
-    res.status(500).send(err || { error: 'internal server error' })
+    res.status(500).send(error)
   })
 }
