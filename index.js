@@ -64,6 +64,29 @@ module.exports = {
     res.status(204).send()
   }),
 
+  f301: (req, res, log, opt) => (to => {
+    const reqBody = req.body
+    const resBody = to
+    const url = req.url
+    const method = req.method
+    const options = opt || {}
+    const logReqBody = options.logReqBody !== false
+    const logResBody = options.logResBody !== false
+    if (log) {
+      if (logReqBody) {
+        log(`request ${method} ${url}, body: `, reqBody)
+      } else {
+        log(`request ${method} ${url}, body: hidden`)
+      }
+      if (logResBody) {
+        log(`response 301, to: `, resBody)
+      } else {
+        log(`response 301, to: hidden`)
+      }
+    }
+    res.redirect(301, to)
+  }),
+
   f400: (req, res, log, opt) => (err => {
     const reqBody = req.body
     const resBody = err || { error: 'bad request' }
